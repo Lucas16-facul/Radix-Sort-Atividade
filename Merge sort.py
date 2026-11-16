@@ -1,0 +1,32 @@
+import random
+import time
+
+
+def merge_sort(lista):
+	if len(lista) <= 1:
+		return lista
+
+	meio = len(lista) // 2
+	esquerda = merge_sort(lista[:meio])
+	direita = merge_sort(lista[meio:])
+	resultado = []
+	i = j = 0
+
+	while i < len(esquerda) and j < len(direita):
+		if esquerda[i] <= direita[j]:
+			resultado.append(esquerda[i])
+			i += 1
+		else:
+			resultado.append(direita[j])
+			j += 1
+
+	resultado.extend(esquerda[i:])
+	resultado.extend(direita[j:])
+	return resultado
+
+
+lista = [random.randint(0, 1_000_000) for _ in range(100_000)]
+inicio = time.perf_counter()
+lista_ordenada = merge_sort(lista)
+tempo = time.perf_counter() - inicio
+print(f"Tempo de ordenação: {tempo:.6f} segundos")
